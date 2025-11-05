@@ -53,18 +53,36 @@
     <h2>Install</h2>
     <pre><code>python -m pip install tyco</code></pre>
     <h2>Basic usage</h2>
-    <pre><code>from tyco import load
+    <pre><code>from tyco import load, loads
 
-with open('config.tyco') as f:
-    cfg = load(f)
+# Load from file
+cfg = load('config.tyco')
 
-print(cfg['Application'][0]['service'])</code></pre>
+# Load from string
+config_text = '''
+str app_name: MyApp
+Server:
+ *str name:
+  - web1
+'''
+cfg = loads(config_text)
+
+# Load entire directory recursively
+cfg = load('config/')
+
+print(cfg['Server'][0]['name'])</code></pre>
     <h2>Run the CLI</h2>
     <pre><code># validate a file against the spec
 tyco validate config.tyco
 
+# validate entire directory
+tyco validate config/
+
 # dump a parsed JSON representation
-tyco dump config.tyco --format json</code></pre>
+tyco dump config.tyco --format json
+
+# dump directory structure
+tyco dump config/ --format json</code></pre>
     <h2>Example config file</h2>
     <p>Create a <code>config.tyco</code> file:</p>
     <pre><code>str timezone: UTC

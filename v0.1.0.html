@@ -346,6 +346,8 @@
         <a href="#references">Object References</a>
         <a href="#templates">String Templates</a>
         <a href="#include">Include Directive</a>
+        <a href="#directory-loading">Directory Loading</a>
+        <a href="#validation">Language-Specific Validation</a>
         <a href="#abnf">ABNF Grammar</a>
         <a href="#example">Complete Example</a>
       </nav>
@@ -425,9 +427,18 @@
       <h3>Composition & Organization</h3>
       <ul>
         <li><strong>Include Directive</strong> — Split configuration across files with <code>#include path</code></li>
+        <li><strong>Directory Loading</strong> — Load entire directory structures recursively</li>
         <li><strong>Comments</strong> — Document configuration with <code>#</code> line comments</li>
         <li><strong>Mixed Syntax</strong> — Combine positional and named values in instance declarations</li>
         <li><strong>Line Continuation</strong> — Split long declarations with trailing backslash</li>
+      </ul>
+
+      <h3>Language Integration</h3>
+      <ul>
+        <li><strong>Validation Modules</strong> — Language-specific validation and custom constructors</li>
+        <li><strong>Type Safety</strong> — Native object mapping with compile-time type checking</li>
+        <li><strong>Custom Logic</strong> — Implement domain-specific validation rules</li>
+        <li><strong>Error Integration</strong> — Validation errors map to configuration source locations</li>
       </ul>
 
       <h3>Date & Time Support</h3>
@@ -822,6 +833,91 @@ Second line'''</span></code></pre>
 
       <div class="note">
         <p><strong>Note:</strong> Included files must not redefine struct types already defined in the including file. Implementations may process includes recursively.</p>
+      </div>
+
+      <h2 id="directory-loading">Directory Loading</h2>
+      <p>Modern Tyco parsers support loading entire directory structures, automatically discovering and processing all <code>.tyco</code> files recursively.</p>
+
+      <h3>Loading Directories</h3>
+      <p>When a directory path is provided to the loader, all <code>.tyco</code> files within that directory and subdirectories are processed as a single configuration context:</p>
+
+      <pre><code><span class="tok-comment"># Python example</span>
+from tyco import load
+
+<span class="tok-comment"># Load all .tyco files in config/ directory recursively</span>
+context = load('config/')
+data = context.to_json()</code></pre>
+
+      <p>Directory structure example:</p>
+      <pre><code>config/
+├── globals.tyco          <span class="tok-comment"># Global settings</span>
+├── databases.tyco        <span class="tok-comment"># Database definitions</span>
+├── environments/
+│   ├── production.tyco   <span class="tok-comment"># Production config</span>
+│   └── staging.tyco      <span class="tok-comment"># Staging config</span>
+└── services/
+    ├── web.tyco          <span class="tok-comment"># Web service config</span>
+    └── api.tyco          <span class="tok-comment"># API service config</span></code></pre>
+
+      <h3>Benefits of Directory Loading</h3>
+      <ul>
+        <li><strong>Organization</strong> — Split large configurations across logical file boundaries</li>
+        <li><strong>Team Workflow</strong> — Multiple team members can work on different configuration areas</li>
+        <li><strong>Environment Separation</strong> — Separate files for different deployment environments</li>
+        <li><strong>Modular Design</strong> — Reusable configuration components</li>
+      </ul>
+
+      <div class="note">
+        <p><strong>Note:</strong> All files are processed in the same context, so struct definitions and references work across file boundaries. However, duplicate struct type definitions will cause errors.</p>
+      </div>
+
+      <h2 id="validation">Language-Specific Validation</h2>
+      <p>Some Tyco parser implementations support language-specific validation modules that provide custom validation logic and constructors for configuration objects.</p>
+
+      <h3>Python Validation Modules</h3>
+      <p>The Python parser automatically loads corresponding <code>.py</code> files when processing <code>.tyco</code> files. If <code>config.tyco</code> exists alongside <code>config.py</code>, the Python module is imported and can provide custom validation:</p>
+
+      <pre><code><span class="tok-comment"># config.tyco</span>
+<span class="tok-key">User</span>:
+ *<span class="tok-type">str</span> <span class="tok-key">username</span>:
+  <span class="tok-type">str</span> <span class="tok-key">email</span>:
+  <span class="tok-type">int</span> <span class="tok-key">age</span>:
+  - <span class="tok-string">alice</span>, <span class="tok-string">alice@example.com</span>, <span class="tok-number">30</span>
+  - <span class="tok-string">bob</span>, <span class="tok-string">invalid-email</span>, <span class="tok-number">25</span></code></pre>
+
+      <pre><code><span class="tok-comment"># config.py</span>
+import re
+from tyco.parser import Struct
+
+class User(Struct):
+    def validate(self):
+        <span class="tok-comment"># Custom email validation</span>
+        email_pattern = r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'
+        if not re.match(email_pattern, self.email):
+            raise ValueError(f"Invalid email format: {self.email}")
+        
+        <span class="tok-comment"># Age validation</span>
+        if self.age < 0:
+            raise ValueError(f"Age must be positive: {self.age}")
+</code></pre>
+
+      <h3>Validation Features</h3>
+      <ul>
+        <li><strong>Custom Constructors</strong> — Override default object creation with specialized logic</li>
+        <li><strong>Field Validation</strong> — Validate individual fields with custom rules</li>
+        <li><strong>Cross-Field Validation</strong> — Validate relationships between multiple fields</li>
+        <li><strong>Type-Specific Logic</strong> — Different validation per struct type</li>
+        <li><strong>Integration</strong> — Validation runs automatically during parsing</li>
+      </ul>
+
+      <h3>Error Handling</h3>
+      <p>Validation errors are reported with clear messages indicating which configuration objects failed validation:</p>
+
+      <pre><code>ValueError: Invalid email format: invalid-email
+  in User(bob) at config.tyco:5</code></pre>
+
+      <div class="note">
+        <p><strong>Note:</strong> Validation modules are optional. If a <code>.py</code> file cannot be loaded or contains errors, configuration parsing continues without validation. This ensures that malformed validation code doesn't break configuration loading.</p>
       </div>
 
       <h2 id="abnf">ABNF Grammar</h2>

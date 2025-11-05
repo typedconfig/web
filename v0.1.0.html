@@ -637,8 +637,17 @@ class Decimal {
       <pre><code><span class="tok-type">time</span> <span class="tok-key">alarm</span>: <span class="tok-string">07:30:00</span>  <span class="tok-comment"># HH:MM:SS</span></code></pre>
 
       <h3>Datetime</h3>
-      <pre><code><span class="tok-type">datetime</span> <span class="tok-key">created</span>: <span class="tok-string">2024-01-15T14:30:00</span>
-<span class="tok-type">datetime</span> <span class="tok-key">updated</span>: <span class="tok-string">2024-01-15T14:30:00Z</span>  <span class="tok-comment"># With timezone</span></code></pre>
+      <p>Datetime values combine date and time components. The standard ISO 8601 format uses a "T" separator, but this can be omitted and replaced with a space for improved readability:</p>
+
+      <pre><code><span class="tok-comment"># Standard ISO 8601 format with T separator</span>
+<span class="tok-type">datetime</span> <span class="tok-key">created</span>: <span class="tok-string">2024-01-15T14:30:00</span>
+<span class="tok-type">datetime</span> <span class="tok-key">updated</span>: <span class="tok-string">2024-01-15T14:30:00Z</span>  <span class="tok-comment"># With timezone</span>
+
+<span class="tok-comment"># Alternative format with space separator (more readable)</span>
+<span class="tok-type">datetime</span> <span class="tok-key">started</span>: <span class="tok-string">2024-01-15 14:30:00</span>
+<span class="tok-type">datetime</span> <span class="tok-key">finished</span>: <span class="tok-string">2024-01-15 14:30:00Z</span>  <span class="tok-comment"># With timezone</span></code></pre>
+
+      <p>Both formats are equivalent and supported by Tyco parsers. The space-separated format is often preferred in configuration files for better human readability.</p>
 
       <h2 id="array">Array</h2>
       <p>Arrays are collections of values enclosed in square brackets. Values are separated by commas. Trailing commas are allowed and can improve readability when arrays span multiple lines.</p>

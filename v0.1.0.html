@@ -861,6 +861,8 @@ class Decimal {
       <h3>Multiple Struct Blocks with Different Defaults</h3>
       <p>You can create multiple struct blocks for the same type with different default values. Each block can define its own defaults and instances. This is useful for organizing instances by environment, region, or other categories.</p>
 
+      <p>Defaults are applied procedurally in the order they appear in the file. Each new defaults declaration updates the current default values for subsequent instances, allowing you to change defaults as you progress through the configuration.</p>
+
       <pre><code><span class="tok-comment"># First Server block with development defaults</span>
 <span class="tok-key">Server</span>:
  *<span class="tok-type">str</span> <span class="tok-key">hostname</span>:

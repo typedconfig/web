@@ -339,6 +339,7 @@
       
       <nav>
         <a href="#introduction">Introduction</a>
+        <a href="#example">Complete Example</a>
         <a href="#features">Features</a>
         <a href="#spec">Specification</a>
         <a href="#comment">Comment</a>
@@ -362,7 +363,6 @@
         <a href="#directory-loading">Directory Loading</a>
         <a href="#validation">Validation</a>
         <a href="#abnf">ABNF Grammar</a>
-        <a href="#example">Complete Example</a>
       </nav>
     </aside>
     <div class="spec-content">
@@ -376,6 +376,47 @@
         <li>Teams that value explicit, auditable configuration</li>
         <li>Applications needing to map configuration to strongly-typed native objects</li>
       </ul>
+
+      <h2 id="example">Complete Example</h2>
+      <p>Here is a complete example demonstrating many of Tyco's features:</p>
+
+      <pre><code><span class="tok-comment"># Global configuration</span>
+<span class="tok-type">str</span> <span class="tok-key">environment</span>: <span class="tok-string">production</span>
+<span class="tok-type">str</span> <span class="tok-key">region</span>: <span class="tok-string">us-east-1</span>
+
+<span class="tok-comment"># Database definitions</span>
+<span class="tok-key">Database</span>:
+ *<span class="tok-type">str</span> <span class="tok-key">name</span>:
+  <span class="tok-type">str</span> <span class="tok-key">host</span>:
+  <span class="tok-type">int</span> <span class="tok-key">port</span>: <span class="tok-number">3306</span>
+  <span class="tok-type">bool</span> <span class="tok-key">ssl</span>: <span class="tok-boolean">true</span>
+  - <span class="tok-string">primary</span>, <span class="tok-string">db1.example.com</span>
+  - <span class="tok-string">replica</span>, <span class="tok-string">db2.example.com</span>, <span class="tok-key">ssl</span>: <span class="tok-boolean">false</span>
+
+<span class="tok-comment"># Server definitions</span>
+<span class="tok-key">Server</span>:
+ *<span class="tok-type">str</span> <span class="tok-key">hostname</span>:
+  <span class="tok-type">str</span> <span class="tok-key">ip</span>:
+  <span class="tok-type">int</span> <span class="tok-key">cores</span>:
+  <span class="tok-type">bool</span> <span class="tok-key">ssd</span>: <span class="tok-boolean">true</span>
+ ?<span class="tok-type">str</span> <span class="tok-key">notes</span>:
+  - <span class="tok-string">web-01</span>, <span class="tok-string">10.0.1.10</span>, <span class="tok-number">8</span>
+  - <span class="tok-string">web-02</span>, <span class="tok-string">10.0.1.11</span>, <span class="tok-number">8</span>
+  - <span class="tok-string">db-01</span>, <span class="tok-string">10.0.2.10</span>, <span class="tok-number">16</span>, <span class="tok-key">notes</span>: <span class="tok-string">"High memory instance"</span>
+
+<span class="tok-comment"># Application definitions</span>
+<span class="tok-key">Application</span>:
+ *<span class="tok-type">str</span> <span class="tok-key">name</span>:
+  <span class="tok-type">str</span> <span class="tok-key">version</span>:
+  <span class="tok-type">Server</span> <span class="tok-key">server</span>:
+  <span class="tok-type">Database</span> <span class="tok-key">database</span>:
+  <span class="tok-type">int[]</span> <span class="tok-key">ports</span>:
+  <span class="tok-type">str</span> <span class="tok-key">url</span>:
+  - <span class="tok-string">web-app</span>, <span class="tok-string">2.1.0</span>, <span class="tok-obj">Server(web-01)</span>, <span class="tok-obj">Database(primary)</span>, \
+    <span class="tok-key">ports</span>: <span class="tok-string">[80, 443]</span>, <span class="tok-key">url</span>: <span class="tok-string">"https://{name}.{global.region}.example.com"</span>
+  - <span class="tok-string">api</span>, <span class="tok-string">1.5.3</span>, <span class="tok-obj">Server(web-02)</span>, <span class="tok-obj">Database(replica)</span>, \
+    <span class="tok-key">ports</span>: <span class="tok-string">[8080]</span>, <span class="tok-key">url</span>: <span class="tok-string">"https://{name}.{server.hostname}:8080"</span>
+</code></pre>
 
       <h2 id="features">Features</h2>
       <p>Tyco provides a rich set of features for building type-safe, maintainable configuration files:</p>
@@ -1149,47 +1190,6 @@ class User(Struct):
 <span class="tok-comment">; Character Classes</span>
 <span class="tok-key">string-char</span> = %x20-21 / %x23-5B / %x5D-10FFFF  <span class="tok-comment">; Any Unicode except " and \</span>
 <span class="tok-key">literal-char</span> = %x20-26 / %x28-10FFFF  <span class="tok-comment">; Any Unicode except '</span>
-</code></pre>
-
-      <h2 id="example">Complete Example</h2>
-      <p>Here is a complete example demonstrating many of Tyco's features:</p>
-
-      <pre><code><span class="tok-comment"># Global configuration</span>
-<span class="tok-type">str</span> <span class="tok-key">environment</span>: <span class="tok-string">production</span>
-<span class="tok-type">str</span> <span class="tok-key">region</span>: <span class="tok-string">us-east-1</span>
-
-<span class="tok-comment"># Database definitions</span>
-<span class="tok-key">Database</span>:
- *<span class="tok-type">str</span> <span class="tok-key">name</span>:
-  <span class="tok-type">str</span> <span class="tok-key">host</span>:
-  <span class="tok-type">int</span> <span class="tok-key">port</span>: <span class="tok-number">3306</span>
-  <span class="tok-type">bool</span> <span class="tok-key">ssl</span>: <span class="tok-boolean">true</span>
-  - <span class="tok-string">primary</span>, <span class="tok-string">db1.example.com</span>
-  - <span class="tok-string">replica</span>, <span class="tok-string">db2.example.com</span>, <span class="tok-key">ssl</span>: <span class="tok-boolean">false</span>
-
-<span class="tok-comment"># Server definitions</span>
-<span class="tok-key">Server</span>:
- *<span class="tok-type">str</span> <span class="tok-key">hostname</span>:
-  <span class="tok-type">str</span> <span class="tok-key">ip</span>:
-  <span class="tok-type">int</span> <span class="tok-key">cores</span>:
-  <span class="tok-type">bool</span> <span class="tok-key">ssd</span>: <span class="tok-boolean">true</span>
- ?<span class="tok-type">str</span> <span class="tok-key">notes</span>:
-  - <span class="tok-string">web-01</span>, <span class="tok-string">10.0.1.10</span>, <span class="tok-number">8</span>
-  - <span class="tok-string">web-02</span>, <span class="tok-string">10.0.1.11</span>, <span class="tok-number">8</span>
-  - <span class="tok-string">db-01</span>, <span class="tok-string">10.0.2.10</span>, <span class="tok-number">16</span>, <span class="tok-key">notes</span>: <span class="tok-string">"High memory instance"</span>
-
-<span class="tok-comment"># Application definitions</span>
-<span class="tok-key">Application</span>:
- *<span class="tok-type">str</span> <span class="tok-key">name</span>:
-  <span class="tok-type">str</span> <span class="tok-key">version</span>:
-  <span class="tok-type">Server</span> <span class="tok-key">server</span>:
-  <span class="tok-type">Database</span> <span class="tok-key">database</span>:
-  <span class="tok-type">int[]</span> <span class="tok-key">ports</span>:
-  <span class="tok-type">str</span> <span class="tok-key">url</span>:
-  - <span class="tok-string">web-app</span>, <span class="tok-string">2.1.0</span>, <span class="tok-obj">Server(web-01)</span>, <span class="tok-obj">Database(primary)</span>, \
-    <span class="tok-key">ports</span>: <span class="tok-string">[80, 443]</span>, <span class="tok-key">url</span>: <span class="tok-string">"https://{name}.{..region}.example.com"</span>
-  - <span class="tok-string">api</span>, <span class="tok-string">1.5.3</span>, <span class="tok-obj">Server(web-02)</span>, <span class="tok-obj">Database(replica)</span>, \
-    <span class="tok-key">ports</span>: <span class="tok-string">[8080]</span>, <span class="tok-key">url</span>: <span class="tok-string">"https://{name}.{server.hostname}:8080"</span>
 </code></pre>
 
     </div>

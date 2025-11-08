@@ -140,6 +140,15 @@
       margin-bottom: 0;
     }
 
+    .preamble code {
+      background: #f3f4f6;
+      padding: 0.125rem 0.375rem;
+      border-radius: 3px;
+      font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+      font-size: 0.9em;
+      color: #374151;
+    }
+
     .comparison-section h2 {
       font-size: 1.75rem;
       margin-bottom: 1.5rem;
@@ -409,10 +418,14 @@
 
   <main>
     <section class="preamble">
-      <h2>A better way to configure your applications</h2>
-      <p>Tyco is a typed configuration format designed for engineers who care about clarity, correctness, and maintainability. If you've ever struggled with YAML's type inference footguns, JSON's lack of comments, or XML's verbosity, Tyco offers a fresh alternative.</p>
-      <p>At its core, Tyco combines the best ideas from tabular data (like CSV) with the structure of configuration languages (like TOML and YAML), while adding explicit type safety. You define your schema inline, set defaults to stay DRY, and reference related objects naturally—all in a syntax that's easy to read and write.</p>
-      <p>Unlike formats that rely on optional fields or conventions, Tyco's schema-first approach ensures all required configuration is explicitly present—no more production surprises from missing settings. Built-in references and templating eliminate data duplication, so you define values once and reuse them everywhere, keeping your configuration automatically consistent.</p>
+      <h2>Configuration as Strongly-Typed Objects</h2>
+      <p>When you write configuration files, you know exactly what structure you need: servers have hostnames and port numbers, databases require connection strings, deployments need environment variables. But traditional formats like JSON and YAML treat everything as unstructured, dynamically-typed dictionaries—leaving it up to users (and your runtime code) to maintain that structure when making changes.</p>
+      
+      <p>Tyco puts types first. Define your configuration schema once, and the format enforces it everywhere. No more accidental <code>country: NO</code> turning into <code>false</code>, <code>version: 1.20</code> becoming <code>1.2</code>, or field names silently changing from <code>timeout</code> to <code>timeOut</code> breaking your application. When your schema says a field is an integer, it's an integer—period.</p>
+      
+      <p>Developers and SREs understand their data structures intimately when creating them, but maintenance is where things break down. Someone removes a required field during cleanup, a well-meaning update introduces a typo, or a YAML parser interprets <code>null</code>, <code>NaN</code>, or <code>~</code> in ways you didn't expect. Tyco eliminates these entire categories of errors by making your intent—the structure of your configuration—explicit and enforced.</p>
+      
+      <p>With built-in references and templating, you define values once and reuse them consistently. Need to reference a database server from multiple services? Use <code>Database(prod-primary)</code> instead of copy-pasting connection strings. Change the server's port? Every reference updates automatically. Your configuration stays DRY, correct, and maintainable.</p>
     </section>
 
     <section class="comparison-section">

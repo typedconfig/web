@@ -435,7 +435,7 @@
   <span class="tok-type">str</span> <span class="tok-key">profile</span>:
   <span class="tok-type">str</span> <span class="tok-key">command</span>: <span class="tok-string">start_app {service}.{profile} -p {port.number}</span>
   <span class="tok-type">Host</span> <span class="tok-key">host</span>:
-  <span class="tok-type">Port</span> <span class="tok-key">port</span>: <span class="tok-obj">Port(http_web)</span>
+  <span class="tok-type">Port</span> <span class="tok-key">port</span>: <span class="tok-obj">Port(http_web)</span>  <span class="tok-comment"># reference to Port instance defined below</span>
   - <span class="tok-key">service</span>: <span class="tok-string">webserver</span>, <span class="tok-key">profile</span>: <span class="tok-string">primary</span>, <span class="tok-key">host</span>: <span class="tok-obj">Host(prod-01-us)</span>
   - <span class="tok-key">service</span>: <span class="tok-string">webserver</span>, <span class="tok-key">profile</span>: <span class="tok-string">backup</span>,  <span class="tok-key">host</span>: <span class="tok-obj">Host(prod-02-us)</span>
   - <span class="tok-key">service</span>: <span class="tok-string">database</span>,  <span class="tok-key">profile</span>: <span class="tok-string">mysql</span>,   <span class="tok-key">host</span>: <span class="tok-obj">Host(prod-02-us)</span>, <span class="tok-key">port</span>: <span class="tok-obj">Port(http_mysql)</span>

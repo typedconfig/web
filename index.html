@@ -854,7 +854,7 @@
         '<strong>Structured tabular data:</strong> Tyco is designed for tabular configuration. YAML uses nested lists which obscure the columnar structure.',
         '<strong>Object references:</strong> Tyco has built-in reference syntax (<code>Host(prod-01-us)</code>). YAML requires anchors/aliases which are verbose and limited.',
         '<strong>Primary keys:</strong> Tyco supports primary keys (*) for lookups. YAML treats everything as unstructured data.',
-        '<strong>No footguns:</strong> Tyco avoids YAML\'s infamous type coercion issues (Norway problem, version numbers as floats, etc.).'
+  '<strong>Real objects, not loose dicts:</strong> Tyco uses real objects with defined attributes and schema validation, while YAML relies on arbitrarily nested dictionaries with unenforced fields.'
       ],
       xml: [
         '<strong>Concise syntax:</strong> Tyco uses minimal syntax. XML requires opening and closing tags for everything, creating massive verbosity.',

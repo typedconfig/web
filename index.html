@@ -491,14 +491,14 @@
   <main>
     <section class="preamble">
       <p class="intro-text">
-  <strong>Tyco</strong> brings type safety to configuration. Schemas specify structure and defaults, and instances use a concise, tabular format for clarity and maintainability.
+  <strong>Tyco</strong> brings types to configuration. Schemas specify structure and defaults, and instances use a concise, tabular format for clarity and maintainability.
       </p>
       <h2>Key features:</h2>
       <ul>
         <li><strong>Type safety</strong> - Field types and names are defined in the schema and statically enforced</li>
-        <li><strong>Built-in defaults</strong> - Eliminate repetition without complex nesting or tricky constructs</li>
-        <li><strong>References and templating</strong> - Define values once, reuse everywhere with automatic updates</li>
-        <li><strong>Tabular format</strong> - Scan multiple instances at a glance instead of scrolling through verbose key-value pairs</li>
+  <li><strong>First-class defaults</strong> - Set common values once and focus on what’s unique</li>
+  <li><strong>References and templating</strong> - Clean abstractions let you reference objects and attributes</li>
+        <li><strong>Tabular format</strong> - View several instances at a glance instead of vertically scrolling through key-value pairs</li>
       </ul>
     </section>
 
@@ -776,7 +776,7 @@
           <li><strong>Readable schema definition:</strong> Tyco defines types inline with the data, while JSON requires external schema files or lacks type safety entirely.</li>
           <li><strong>No redundancy:</strong> Tyco uses defaults and templates to avoid repeating values. JSON forces you to specify every field for every object.</li>
           <li><strong>Comments supported:</strong> Tyco has native comment support. JSON doesn't allow comments, making documentation impossible.</li>
-          <li><strong>Cleaner syntax:</strong> Tyco eliminates unnecessary braces, brackets, and quotes where they add no value.</li>
+          <li><strong>Cleaner syntax:</strong> Tyco eliminates unnecessary braces, brackets, and quotes where they add no value (and trailing commas supported!).</li>
           <li><strong>Object references:</strong> Tyco allows referencing other objects by primary key (e.g., <code>Host(prod-01-us)</code>). JSON requires storing raw strings or duplicating data.</li>
         </ul>
       </div>
@@ -850,10 +850,10 @@
         '<strong>Object references:</strong> Tyco allows referencing other objects by primary key (e.g., <code>Host(prod-01-us)</code>). JSON requires storing raw strings or duplicating data.'
       ],
       yaml: [
-        '<strong>Explicit types:</strong> Tyco requires type declarations upfront. YAML relies on type inference which leads to runtime surprises (e.g., <code>NO</code> becomes <code>false</code>).',
-        '<strong>Structured tabular data:</strong> Tyco is designed for tabular configuration. YAML uses nested lists which obscure the columnar structure.',
-        '<strong>Object references:</strong> Tyco has built-in reference syntax (<code>Host(prod-01-us)</code>). YAML requires anchors/aliases which are verbose and limited.',
-        '<strong>Primary keys:</strong> Tyco supports primary keys (*) for lookups. YAML treats everything as unstructured data.',
+        '<strong>Explicit types:</strong> Tyco requires type declarations upfront. YAML infers value type which leads to runtime surprises (e.g., <code>NO</code> becomes <code>false</code>).',
+        '<strong>Structured tabular data:</strong> Tyco is designed for tabular configuration. YAML uses lists of vertical dictionaries which obscure the columnar structure.',
+        '<strong>Object references:</strong> Tyco has built-in reference syntax (<code>Host(prod-01-us)</code>). YAML requires anchors/aliases which are tricky to manage.',
+  '<strong>Flat structure:</strong> Tyco enforces a single level of structure for each object type, while YAML allows arbitrary levels of indentation and nesting.',
   '<strong>Real objects, not loose dicts:</strong> Tyco uses real objects with defined attributes and schema validation, while YAML relies on arbitrarily nested dictionaries with unenforced fields.'
       ],
       xml: [
@@ -861,12 +861,12 @@
         '<strong>Human-readable:</strong> Tyco is designed for engineers to read and write. XML is optimized for machines, not humans.',
         '<strong>No ceremony:</strong> Tyco gets straight to the data. XML requires XML declarations, namespaces, and excessive nesting.',
         '<strong>Clear structure:</strong> Tyco\'s tabular format makes relationships obvious. XML\'s deep nesting obscures the data model.',
-        '<strong>Modern design:</strong> Tyco is built for configuration. XML was designed for document markup and shows its age.'
+  '<strong>Modern design:</strong> Tyco is built for configuration. XML was designed for document markup.'
       ],
       toml: [
-        '<strong>Tabular data model:</strong> Tyco is built around tables with schemas. TOML uses array-of-tables which lack type safety and require repetition.',
+        '<strong>Tabular data model:</strong> Tyco is built around tables with schemas. TOML uses array-of-tables whose types are inferred by the values.',
         '<strong>Object references:</strong> Tyco supports references to other objects (<code>Port(http_web)</code>). TOML only stores raw values.',
-        '<strong>Inline schema:</strong> Tyco defines types directly in the file. TOML has no type system, everything is inferred.',
+  '<strong>Compact rows:</strong> Each object in TOML requires a new section and a line for each key-value pair, while Tyco can express the same thing in a single line.',
         '<strong>Defaults and templates:</strong> Tyco supports default values and templating to stay DRY. TOML requires explicit values everywhere.',
         '<strong>Better for complex config:</strong> Tyco handles relational data naturally. TOML becomes unwieldy as configuration complexity grows.'
       ],

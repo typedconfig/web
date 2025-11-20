@@ -425,6 +425,18 @@
       line-height: 1.6;
     }
 
+    .cta-code {
+      margin-top: 1rem;
+      background: #0f172a;
+      color: #f8fafc;
+      padding: 0.75rem;
+      border-radius: 8px;
+      font-size: 0.85rem;
+      font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+      line-height: 1.4;
+      overflow-x: auto;
+    }
+
     .footer {
       margin-top: 2rem;
       padding: 1.5rem;
@@ -477,6 +489,7 @@
     <nav class="nav-actions">
       <select class="spec-selector" id="spec-version" aria-label="Spec Version">
         <option value="">Spec</option>
+        <option value="0.2.0">v0.2.0</option>
         <option value="0.1.0">v0.1.0</option>
       </select>
       
@@ -808,7 +821,7 @@
       <h2>Get Started</h2>
   <div class="cta-grid">
         <div class="cta-card">
-          <h3><a href="v0.1.0.html">Read the Spec</a></h3>
+          <h3><a href="v0.2.0.html">Read the Spec</a></h3>
           <p>Dive into the complete specification to understand Tyco's syntax, type system, and capabilities in detail.</p>
         </div>
         <div class="cta-card">
@@ -817,6 +830,12 @@
             The easiest way to try Tyco is with the <a href="https://github.com/typedconfig/tyco-python" target="_blank" rel="noopener">Python bindings</a>—the README has a quick example to get you started.<br><br>
             Prefer another language? <a href="https://github.com/typedconfig" target="_blank" rel="noopener">Find a parser</a> for JavaScript, Java, C, and more.
           </p>
+          <pre class="cta-code"><code>import tyco
+context = tyco.load("config.tyco")
+cfg = context.to_object()
+print(cfg.environment, cfg.timeout)
+for server in cfg.Server:
+    print(server.name, server.port)</code></pre>
         </div>
       </div>
     </section>

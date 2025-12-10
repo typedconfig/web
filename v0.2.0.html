@@ -1146,6 +1146,10 @@ data = context.as_json()</code></pre>
       <h3>Python Validation Modules</h3>
       <p>The Python parser automatically loads corresponding <code>.py</code> files when processing <code>.tyco</code> files. If <code>config.tyco</code> exists alongside <code>config.py</code>, the Python module is imported and can provide custom validation:</p>
 
+      <div class="note">
+        <p>Import errors (including syntax errors) in a sibling <code>.py</code> module now halt loading so broken validators surface immediately.</p>
+      </div>
+
       <pre><code><span class="tok-comment"># config.tyco</span>
 <span class="tok-key">User</span>:
  *<span class="tok-type">str</span> <span class="tok-key">username</span>:

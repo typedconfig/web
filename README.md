@@ -2,7 +2,7 @@
 
 🌐 **Interactive playground and comprehensive documentation for the Tyco configuration language**
 
-[![Website](https://img.shields.io/website?url=https%3A//typedconfig.io)](https://typedconfig.io)
+[![Website](https://img.shields.io/website?url=https%3A//typedconfig.com)](https://typedconfig.com)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 The official website and interactive playground for Tyco - a modern, type-safe configuration language designed for clarity and flexibility. Experience Tyco directly in your browser with real-time parsing, syntax highlighting, and instant feedback.
@@ -30,7 +30,7 @@ The official website and interactive playground for Tyco - a modern, type-safe c
 
 ## 🔗 Live Website
 
-**Visit [typedconfig.io](https://typedconfig.io)** to:
+**Visit [typedconfig.com](https://typedconfig.com)** to:
 
 - 🎯 **Try the interactive playground** with live Tyco parsing
 - 📖 **Browse the complete language specification**
@@ -127,7 +127,7 @@ The website is built as static HTML files for maximum performance and reliabilit
 ### 🚀 **Deployment**
 The site is automatically deployed via GitHub Pages:
 
-- **Custom Domain**: [typedconfig.io](https://typedconfig.io)
+- **Custom Domain**: [typedconfig.com](https://typedconfig.com)
 - **HTTPS**: Automatically enabled with custom domain
 - **Global CDN**: Fast loading worldwide
 - **Auto-Deploy**: Updates live on every push to main branch
@@ -186,7 +186,7 @@ MIT License - see the [LICENSE](LICENSE) file for details.
 
 **Ready to experience Tyco?**
 
-�� **[Try the Interactive Playground →](https://typedconfig.io)**
+�� **[Try the Interactive Playground →](https://typedconfig.com)**
 
 - Write Tyco configurations in your browser
 - See real-time parsing and validation  
@@ -195,4 +195,4 @@ MIT License - see the [LICENSE](LICENSE) file for details.
 
 ---
 
-*Made with ❤️ by the Tyco team. [Learn more at typedconfig.io](https://typedconfig.io)*
+*Made with ❤️ by the Tyco team. [Learn more at typedconfig.com](https://typedconfig.com)*
